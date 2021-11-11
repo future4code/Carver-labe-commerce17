@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Carrinho  from './components/Carrinho';
 import Filtro from './components/Filtro'
-import {Home} from './components/Home'
+import { Home } from './components/Home';
+import Carrinho from './components/Carrinho';
 
 
  const Container = styled.div`
@@ -16,9 +16,9 @@ import {Home} from './components/Home'
  const produtos = [ 
   {
     id: 1,
-    name: 'Produto legal',
-    price: 123,
-    photo: 'https://picsum.photos/200/200?a=1'
+    name: "Foguete da Missão Apollo 11",
+    value: 10000.0,
+    imageUrl: "https://picsum.photos/200/200",
   },
   {
     id: 2,
@@ -48,6 +48,9 @@ export default class App extends React.Component{
     <Container>
       <Filtro/>
       <Home/>
+      <Carrinho/>
+    
+ 
     </Container>
    )
   

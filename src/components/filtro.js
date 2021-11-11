@@ -1,36 +1,52 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components';
 
-const ContainerFiltro= styled.div`
-    border: 1px solid #000;
-    padding: 8px;
-    
-` 
-const InputContainer = styled.label`
+const FiltroContainer = styled.div`
+border: 1px solid black;
+padding: 8px;
+`
+
+const InputCont = styled.label`
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     margin-bottom: 8px;
+    align-items: flex-start;
 `
+const InfoCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  p {
+    margin: 4px 0;
+  }
+`
+
 export default class Filtro extends React.Component{
+
     render(){
-       return(
-        <ContainerFiltro>
-        <h3>Filtros</h3>
-        <InputContainer>
-        Valor mínimo:
-        <input type = "number"/>
-        </InputContainer>
-        <InputContainer>
-        Valor máximo
-        <input type = "number"/>
-        </InputContainer>
-        <InputContainer>
-        Buscar por nome:
-        <input type = "text"/>
-        </InputContainer>
-    </ContainerFiltro>
-       )
-    }
+        return (
+            <FiltroContainer>
+                <h3>Filtros</h3>
+                <InputCont>
+                Valor Mínimo:
+                <input
+                type="number"
+                />
+                  Valor Máximo:
+                <input
+                type="number"
+                />
+                  Buscar por Nome:
+                <input
+                type="text"
+                />
+                
+                </InputCont>
+            </FiltroContainer>
+            
+        
+    )
 }
 
+
+}
