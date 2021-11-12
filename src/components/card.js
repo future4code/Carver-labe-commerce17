@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+
 const DisplayCard = styled.div `
     background-color: rgba(188, 204, 154, 0.5);
     display: flex;
@@ -33,13 +34,14 @@ const DisplayCard = styled.div `
 `
 
 export default class Card extends React.Component {
+
     render() {
         return (
             <DisplayCard>
                 <img src={this.props.photo} alt={"imagem do post"} />
                 <h2>{this.props.name}</h2>
                 <p>R${this.props.price} ou por 10x R${this.props.parcelado}</p>
-                <button>Adicionar ao Carrinho</button>
+                <button onClick={this.addCarrinho}>Adicionar ao carrinho</button>
             </DisplayCard>
             
 
