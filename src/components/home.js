@@ -24,7 +24,7 @@ const Botao = styled.button`
   align-self: center;
   margin-top: 4px;
 `;
-
+  //push na mater
 const Img = styled.img`
   height: 300px;
   width: 100%;

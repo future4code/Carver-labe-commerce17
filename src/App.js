@@ -24,6 +24,9 @@ const DivPost = styled.div`
   flex-direction: column;
 `;
 
+//novo push
+
+
 export default class App extends React.Component {
   state = {
     produtos: [
