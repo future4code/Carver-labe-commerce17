@@ -3,26 +3,20 @@ import React from "react";
 import styled from "styled-components";
 import App from "../App";
 
-const CarrinhoContainer = styled.div`
-  padding: 8px;
-  background-color: #EAE7C6;
-  border-radius: 20px;
+const DisplayCarrinho = styled.div`
+    margin: 5px;
+    padding: 10px;
 `
-
-const ListaContainer =  styled.div`
-display: grid;
-  gap: 8px;
-`
-
 
 
 export default class Carrinho extends React.Component{
     render(){
         return(
-            <CarrinhoContainer>
-                <h3>Carrinho</h3>
-                
-            </CarrinhoContainer>
+            <DisplayCarrinho>
+                <h2>Carrinho</h2>
+                <h3>{this.props.name}</h3>
+                <p>R${this.props.price} ou por 10x R${this.props.parcelado}</p>
+            </DisplayCarrinho>
         )
     }
 

@@ -3,18 +3,18 @@ import styled from "styled-components";
 import Carrinho from "./components/carrinho";
 import Card from "./components/card";
 
-const Display = styled.div `
+const Display = styled.div`
     display: grid;
-    grid-template-columns: 200px 1fr 250px;
+    grid-template-columns: 200px 1fr 180px;
 `
 
-const Cards = styled.div `
-      display: grid;
+const Cards = styled.div`
+    display: grid;
     grid-template-columns: repeat(3,300px);
     justify-items: start;
     justify-content: center;
 `
-const Inputs = styled.div `
+const Inputs = styled.div`
     min-height: 100vh;
     background-color: #EAE7C6;
     border-radius: 20px;
@@ -33,9 +33,9 @@ const Inputs = styled.div `
 `
 
 export default class App extends React.Component {
-  
+
   state = {
-    produtos: [ 
+    produtos: [
       {
         id: 1,
         name: 'Produto Um',
@@ -73,45 +73,19 @@ export default class App extends React.Component {
         photo: 'https://picsum.photos/200/200?a=4'
       }
     ],
+
     carrinho: [
       {
         id: 6,
         name: 'Produto 6',
         price: 75.0,
-        photo: 'https://picsum.photos/200/200?a=4',
-        quantidade: 1
-      }
-    ],
+        photo: 'https://picsum.photos/200/200?a=4'
+        
+      }],
 
     query: '',
     minPrice: '',
     maxPrice: ''
-  }
-
-  addCarrinho =(event) =>{
- let click = this.state.produtos.filter((produto)=>{
-   return produto.id == event.target.value
- })
- let verificar = 0
- let itemCarrinho = this.state.carrinho.map((itemCarrinho)=>{
-   if(itemCarrinho.produto.id == event.target.value){
-     itemCarrinho.quantidade++
-   }
-   return itemCarrinho
- })
-  if(verificar == 0){
-    this.setState({
-      carrinho: [...this.state.carrinho,{
-        quantidade: 1,
-        produto: click[0]
-      }]
-    })
-  } else{
-    this.setState({
-      carrinho: itemCarrinho
-    })
-  }
-
   }
 
   Updatequery = (event) => {
@@ -131,62 +105,97 @@ export default class App extends React.Component {
       maxPrice: event.target.value
     })
   }
+  
+AddCarrinho = (event) => {
+    let selecionarProduto = this.state.produtos.filter ((produto) => {
+      return produto.id === event.target.value
+    })
+
+    let verificar = 0
+  
+    let itemCarrinho = this.state.carrinho.map ((carrinho) => {
+      if (carrinho.produto.id === event.target.value) {
+        carrinho.quantidade ++
+        verificar ++
+      }
+      return carrinho
+    })
+
+    if (verificar === 0) {
+      this.setState({
+          carrinho: [...this.state.carrinho, {
+          quantidade: 1,
+          produto: selecionarProduto[0]
+        }]
+      }, () => console.log(this.state.carrinho))
+    } else {
+      this.setState({
+        carrinho: itemCarrinho
+      }, () => console.log(this.state.carrinho))
+    }
+
+  }
 
  
-  render () {
+
+  render() {
     return (
-      
+
       <Display>
 
         <Inputs>
-          
-            <p>Procure pelo <span>Nome</span>:</p>
-            <input
-              placeholder='Pesquisar' 
-              value={this.state.query}
-              onChange={this.Updatequery}
-            />
 
-            <p>Procure pelo <span>Preço</span>:</p>
-            <input
-              type = 'number'
-              placeholder='R$ Preço Min' 
-              value={this.state.minPrice}
-              onChange={this.UpdateMinPrice}
-            />
-            <input
-              type = 'number'
-              placeholder='R$ Preço Máx' 
-              value={this.state.maxPrice}
-              onChange={this.UpdateMaxPrice}
-            />
-          
+          <p>Procure pelo <span>Nome</span>:</p>
+          <input
+            placeholder='Pesquisar'
+            value={this.state.query}
+            onChange={this.Updatequery}
+          />
+
+          <p>Procure pelo <span>Preço</span>:</p>
+          <input
+            type='number'
+            placeholder='R$ Preço Min'
+            value={this.state.minPrice}
+            onChange={this.UpdateMinPrice}
+          />
+          <input
+            type='number'
+            placeholder='R$ Preço Máx'
+            value={this.state.maxPrice}
+            onChange={this.UpdateMaxPrice}
+          />
+
         </Inputs>
 
         <Cards>
 
           {this.state.produtos
-          .filter (produto => {
-            return produto.name.toLowerCase().includes(this.state.query.toLowerCase())
-          })
-          .filter (produto => {
-            return this.state.minPrice === '' || produto.price >= this.state.minPrice
-          })
-          .filter (produto => {
-            return this.state.maxPrice === '' || produto.price <= this.state.maxPrice
-          })
-          .map (produto => {
-            return <Card photo = {produto.photo} name = {produto.name} price = {produto.price} parcelado = {produto.price / 10} />
-          })}
+            .filter(produto => {
+              return produto.name.toLowerCase().includes(this.state.query.toLowerCase())
+            })
+            .filter(produto => {
+              return this.state.minPrice === '' || produto.price >= this.state.minPrice
+            })
+            .filter(produto => {
+              return this.state.maxPrice === '' || produto.price <= this.state.maxPrice
+            })
+            .map(produto => {
+              return <Card photo={produto.photo} name={produto.name} price={produto.price} parcelado={produto.price / 10} />
+            })}
         </Cards>
-        <Carrinho>
-    
-        </Carrinho>
-      </Display>  
+        <Inputs>
+        
+            {this.state.carrinho.map(produto => {
+              return <Carrinho name={produto.name} price={produto.price}/>
+            })}
+          
+        </Inputs>
+      </Display>
 
-      
 
-      
+
+
     )
   }
 }

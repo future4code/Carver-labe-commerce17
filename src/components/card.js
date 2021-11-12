@@ -41,9 +41,8 @@ export default class Card extends React.Component {
                 <img src={this.props.photo} alt={"imagem do post"} />
                 <h2>{this.props.name}</h2>
                 <p>R${this.props.price} ou por 10x R${this.props.parcelado}</p>
-                <button onClick={this.addCarrinho}>Adicionar ao carrinho</button>
+                <button value = {this.props.id} onClick={this.props.function}>Adicionar ao carrinho</button>
             </DisplayCard>
-            
 
         );
     }
