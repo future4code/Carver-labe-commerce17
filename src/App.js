@@ -9,8 +9,10 @@ const Display = styled.div `
 `
 
 const Cards = styled.div `
-    display: grid;
-    grid-template-columns: repeat(3, 1fr)
+      display: grid;
+    grid-template-columns: repeat(3,300px);
+    justify-items: start;
+    justify-content: center;
 `
 const Inputs = styled.div `
     min-height: 100vh;
@@ -39,7 +41,7 @@ export default class App extends React.Component {
         name: 'Produto Um',
         price: 1000.0,
         photo: 'https://picsum.photos/200/200?a=5'
-      },,
+      },
       {
         id: 2,
         name: 'Produto Dois',
@@ -57,12 +59,59 @@ export default class App extends React.Component {
         name: 'Produto Quatro',
         price: 75.0,
         photo: 'https://picsum.photos/200/200?a=4'
+      },
+      {
+        id: 5,
+        name: 'Produto 5',
+        price: 75.0,
+        photo: 'https://picsum.photos/200/200?a=4'
+      },
+      {
+        id: 6,
+        name: 'Produto 6',
+        price: 75.0,
+        photo: 'https://picsum.photos/200/200?a=4'
+      }
+    ],
+    carrinho: [
+      {
+        id: 6,
+        name: 'Produto 6',
+        price: 75.0,
+        photo: 'https://picsum.photos/200/200?a=4',
+        quantidade: 1
       }
     ],
 
     query: '',
     minPrice: '',
     maxPrice: ''
+  }
+
+  addCarrinho =(event) =>{
+ let click = this.state.produtos.filter((produto)=>{
+   return produto.id == event.target.value
+ })
+ let verificar = 0
+ let itemCarrinho = this.state.carrinho.map((itemCarrinho)=>{
+   if(itemCarrinho.produto.id == event.target.value){
+     itemCarrinho.quantidade++
+   }
+   return itemCarrinho
+ })
+  if(verificar == 0){
+    this.setState({
+      carrinho: [...this.state.carrinho,{
+        quantidade: 1,
+        produto: click[0]
+      }]
+    })
+  } else{
+    this.setState({
+      carrinho: itemCarrinho
+    })
+  }
+
   }
 
   Updatequery = (event) => {
@@ -83,6 +132,7 @@ export default class App extends React.Component {
     })
   }
 
+ 
   render () {
     return (
       
@@ -129,7 +179,9 @@ export default class App extends React.Component {
             return <Card photo = {produto.photo} name = {produto.name} price = {produto.price} parcelado = {produto.price / 10} />
           })}
         </Cards>
-        
+        <Carrinho>
+    
+        </Carrinho>
       </Display>  
 
       

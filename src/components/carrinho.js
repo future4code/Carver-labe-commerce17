@@ -1,10 +1,12 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import styled from "styled-components";
+import App from "../App";
 
 const CarrinhoContainer = styled.div`
- border: 1px solid black;
   padding: 8px;
+  background-color: #EAE7C6;
+  border-radius: 20px;
 `
 
 const ListaContainer =  styled.div`
@@ -19,6 +21,7 @@ export default class Carrinho extends React.Component{
         return(
             <CarrinhoContainer>
                 <h3>Carrinho</h3>
+                
             </CarrinhoContainer>
         )
     }
