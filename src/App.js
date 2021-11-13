@@ -80,12 +80,14 @@ export default class App extends React.Component {
         name: 'Produto 6',
         price: 75.0,
         photo: 'https://picsum.photos/200/200?a=4'
-        
+
       }],
 
     query: '',
     minPrice: '',
-    maxPrice: ''
+    maxPrice: '',
+    filterName: '',
+    ordem: "Crescente",
   }
 
   Updatequery = (event) => {
@@ -105,25 +107,25 @@ export default class App extends React.Component {
       maxPrice: event.target.value
     })
   }
-  
-AddCarrinho = (event) => {
-    let selecionarProduto = this.state.produtos.filter ((produto) => {
+
+  AddCarrinho = (event) => {
+    let selecionarProduto = this.state.produtos.filter((produto) => {
       return produto.id === event.target.value
     })
 
     let verificar = 0
-  
-    let itemCarrinho = this.state.carrinho.map ((carrinho) => {
+
+    let itemCarrinho = this.state.carrinho.map((carrinho) => {
       if (carrinho.produto.id === event.target.value) {
-        carrinho.quantidade ++
-        verificar ++
+        carrinho.quantidade++
+        verificar++
       }
       return carrinho
     })
 
     if (verificar === 0) {
       this.setState({
-          carrinho: [...this.state.carrinho, {
+        carrinho: [...this.state.carrinho, {
           quantidade: 1,
           produto: selecionarProduto[0]
         }]
@@ -136,11 +138,72 @@ AddCarrinho = (event) => {
 
   }
 
- 
+  onChangeFilter = (event) => {
+    this.setState({ ordem: event.target.value });
+  };
+
+  onChangeFiltroMin = (event) => {
+    this.setState({ minPrice: event.target.value });
+  };
+  onChangeFiltroMax = (event) => {
+    this.setState({ maxPrice: event.target.value });
+  };
+  onChangeFiltroNome = (event) => {
+    this.setState({ filterName: event.target.value });
+  };
+
+  ordemArray = () => {
+    const ordemArray = this.state.produtos.sort((a, b) =>
+      this.state.ordem === "Crescente" ? a.price - b.price : b.price - a.price
+    );
+    return ordemArray;
+  };
+
+  limparFiltro = () => {
+    this.setState({
+      minPrice: "",
+      maxPrice: "",
+      filterName: "",
+    });
+  };
+
+  filtroPassagensArray = (min, max, texto) => {
+    let filtragemPorValor;
+    if (min || max) {
+      filtragemPorValor = this.state.produtos.filter((item) => {
+        if (min && !max) {
+          return item.price >= min;
+        } else if (!min && max) {
+          return item.price <= max;
+        } else if (min && max) {
+          return item.price >= min && item.price <= max;
+        }
+      });
+    } else {
+      filtragemPorValor = this.state.produtos;
+    }
+
+    let filtragemCompleta;
+    if (texto) {
+      filtragemCompleta = filtragemPorValor.filter((item) => {
+        return item.name.toLowerCase().includes(`${texto.toLowerCase()}`);
+      });
+    } else {
+      filtragemCompleta = filtragemPorValor;
+    }
+    return filtragemCompleta;
+  };
+
 
   render() {
+    this.ordemArray();
+    let filtroArray = this.filtroPassagensArray(
+      this.state.minPrice,
+      this.state.maxPrice,
+      this.state.filterName
+    );
     return (
-
+     
       <Display>
 
         <Inputs>
@@ -166,6 +229,19 @@ AddCarrinho = (event) => {
             onChange={this.UpdateMaxPrice}
           />
 
+          <button onClick={this.limparFiltro}>Limpar</button>
+
+          
+
+          <p>Quantidade de produtos: {filtroArray.length}  </p>
+          <div>
+            <label>Ordenar por: </label>
+            <select onChange={this.onChangeFilter}>
+              <option value="Crescente">Menor Preço </option>
+              <option value="Decrescente">Maior Preço </option>
+            </select>
+          </div>
+
         </Inputs>
 
         <Cards>
@@ -185,11 +261,11 @@ AddCarrinho = (event) => {
             })}
         </Cards>
         <Inputs>
-        
-            {this.state.carrinho.map(produto => {
-              return <Carrinho name={produto.name} price={produto.price}/>
-            })}
-          
+
+          {this.state.carrinho.map(produto => {
+            return <Carrinho name={produto.name} price={produto.price} />
+          })}
+
         </Inputs>
       </Display>
 
