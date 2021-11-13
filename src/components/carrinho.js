@@ -15,7 +15,7 @@ export default class Carrinho extends React.Component{
             <DisplayCarrinho>
                 <h2>Carrinho</h2>
                 <h3>{this.props.name}</h3>
-                <p>R${this.props.price} ou por 10x R${this.props.parcelado}</p>
+                <p>R$:{this.props.price} ou por 10x R$:{this.props.parcelado}</p>
             </DisplayCarrinho>
         )
     }
