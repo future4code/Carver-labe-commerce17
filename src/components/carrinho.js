@@ -1,6 +1,14 @@
 import React from "react";
 import ItemCarrinho from "./ItemCarrinho";
+import styled from 'styled-components';
 
+const ButtonCart = styled.button`
+    margin: 10px;
+    border-radius: 15px;
+    background-color: green;
+    border: none;
+    padding: 6px;
+    color: white;`
 
 class Carrinho extends React.Component {
   valorTotal = () => {
@@ -40,7 +48,7 @@ class Carrinho extends React.Component {
         {<h3> Total: R$ {this.valorTotal()} </h3>}
         
         {carrinho}
-        <button onClick = {() => this.props.finalizaCompra()}>Finalizar compra</button>
+        <ButtonCart onClick = {() => this.props.finalizaCompra()}>Finalizar compra</ButtonCart>
       </div>
     );
   }

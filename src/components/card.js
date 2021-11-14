@@ -29,7 +29,13 @@ const DisplayCard = styled.div `
     }
 
     button {
-        margin-bottom: 5px;
+    margin-bottom: 5px;
+    border-radius: 15px;
+    background-color: #1dcc69;
+    border: none;
+    padding: 6px;
+    color: white;
+
     }
 `
 
@@ -41,7 +47,8 @@ export default class Card extends React.Component {
             <DisplayCard>
                 <img src={this.props.photo} alt={"imagem do post"} />
                 <h2>{this.props.name}</h2>
-                <p>R$:{this.props.price} ou por 10x R$:{this.props.parcelado}</p>
+                <p>R$:{this.props.price},00 </p>
+                <p>ou por 10x R$:{this.props.parcelado},00</p>
             <button onClick={() => this.props.adicionarAoCarrinho(this.props.id)} >Adicionar ao carrinho</button>
             </DisplayCard>
 

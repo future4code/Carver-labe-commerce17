@@ -3,6 +3,16 @@ import styled from "styled-components";
 import Card from "./components/card";
 import Carrinho from "./components/carrinho";
 
+const HeaderContainer = styled.div`
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    height:80px;
+    background-color:black;
+    color:white;
+    font-size:3rem;
+
+`
 const Display = styled.div`
     display: grid;
     grid-template-columns: 1fr 5fr 1.3fr;
@@ -29,76 +39,119 @@ const Inputs = styled.div`
 
     input {
       margin: 2px;
-      width: 150px;
+      width: 80%;
+      border-radius: 20px;
+      padding:8px;
     }
+
+
 `
+const ButtonClean = styled.button`
+    margin-bottom: 5px;
+    border-radius: 15px;
+    background-color: black;
+    border: none;
+    padding: 6px;
+    color: white;
+    `
 
 export default class App extends React.Component {
 
   state = {
     produtos: [
       {
+        id: 0,
+        name: "Pedacinho de Venus",
+        price: 15000.00,
+        photo:
+          "https://www.zmescience.com/mrf4u/statics/i/ps/cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg?width=1200&enable=upscale",
+        quantify: 0,
+      },
+      {
         id: 1,
-        name: 'Produto Um',
-        price: 1000.0,
-        photo: 'https://picsum.photos/200/200?a=5',
-        quantify:0,
-
+        name: "Um bronze em Marte",
+        price: 10000.00,
+        photo:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/1200px-OSIRIS_Mars_true_color.jpg",
+        quantify: 0,
       },
       {
         id: 2,
-        name: 'Produto Dois',
-        price: 270.0,
-        photo: 'https://picsum.photos/200/200?a=2',
-        quantify:0,
-      
+        name: "De uma volta em Saturno",
+        price: 5000.00,
+        photo:
+          "https://p2.trrsf.com/image/fget/cf/1200/1200/filters:quality(85)/images.terra.com/2020/10/16/saiba-como-o-ciclo-de-saturno-influencia-na-perspectiva-profissional-16094.jpg",
+        quantify: 0,
       },
       {
         id: 3,
-        name: 'Produto Três',
-        price: 150.0,
-        photo: 'https://picsum.photos/200/200?a=3',
-        quantify:0,
+        name: "Uma hora em Jupiter",
+        price: 35000.00,
+        photo:
+          "https://s2.glbimg.com/34AekqqbXdAFCWAuG0g34I6d0Nw=/1200x/smart/filters:cover():strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/B/w/tNqMxeRvWvSvLbHuChkA/jupiter01.jpg",
+        quantify: 0,
       },
       {
         id: 4,
-        name: 'Produto Quatro',
-        price: 75.0,
-        photo: 'https://picsum.photos/200/200?a=4',
-        quantify:0,
+        name: "Sua Terra",
+        price: 2000.00,
+        photo:"https://tdc-images.tolunastart-tdcprod.com/2017/09/30/59092e12-f0f9-4c23-9680-33a5ec15d110.jpg",
+        quantify: 0,
       },
       {
         id: 5,
-        name: 'Produto 5',
-        price: 75.0,
-        photo: 'https://picsum.photos/200/200?a=4',
-        quantify:0,
+        name: "Falso Plutão",
+        price: 27000.00,
+        photo: "https://f4.bcbits.com/img/a0980289374_10.jpg",
+        quantify: 0,
       },
       {
         id: 6,
-        name: 'Produto 6',
-        price: 75.0,
-        photo: 'https://picsum.photos/200/200?a=4',
-        quantify:0,
-      }
-    ],
-
-    carrinho: [
+        name: "Novo mundo",
+        price: 370000.00,
+        photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgCPC7tiM0Aixf6OM3fttiPAB1qDRvG9xaiDqdy6lVOHIMknmYc4nMnCpYLLxDGBGorG4&usqp=CAU",
+        quantify: 0,
+      },
       {
-        id: 6,
-        name: 'Produto 6',
-        price: 75.0,
-        photo: 'https://picsum.photos/200/200?a=4',
-        quantify:0,
-
-      }],
-
+        id: 7,
+        name: "Núcleo",
+        price: 60000.00,
+        photo: "https://p2.trrsf.com/image/fget/cf/940/0/images.terra.com/2021/09/05/1700461395-1040064729eba61f5-3d3a-47ff-aa71-5d692824d930.jpg",
+        quantify: 0,
+      },
+    ],
     query: '',
     minPrice: '',
     maxPrice: '',
     filterName: '',
     ordem: "Crescente",
   }
+
+  onChangeFilter = (event) => {
+    this.setState({ ordem: event.target.value });
+  };
+  onChangeFiltroMin = (event) => {
+    this.setState({ minPrice: event.target.value });
+  };
+  onChangeFiltroMax = (event) => {
+    this.setState({ maxPrice: event.target.value });
+  };
+  onChangeFiltroNome = (event) => {
+    this.setState({ filterName: event.target.value });
+  };
+  
+  onSubmitFinalizaCompra = (event) => {
+    alert ("Compra realizada com sucesso!")
+    window.location.reload(false);
+  };
+  
+ // -------------------- FUNÇÕES DO FILTRO --------------------
+  ordemArray = () => {
+    const ordemArray = this.state.produtos.sort((a, b) =>
+      this.state.ordem === "Crescente" ? a.price - b.price : b.price - a.price
+    );
+    return ordemArray;
+  };
 
   Updatequery = (event) => {
     this.setState({
@@ -117,60 +170,6 @@ export default class App extends React.Component {
       maxPrice: event.target.value
     })
   }
-
-  AddCarrinho = (event) => {
-    let selecionarProduto = this.state.produtos.filter((produto) => {
-      return produto.id === event.target.value
-    })
-
-    let verificar = 0
-
-    let itemCarrinho = this.state.carrinho.map((carrinho) => {
-      if (carrinho.produto.id === event.target.value) {
-        carrinho.quantidade++
-        verificar++
-      }
-      return carrinho
-    })
-
-    if (verificar === 0) {
-      this.setState({
-        carrinho: [...this.state.carrinho, {
-          quantidade: 1,
-          produto: selecionarProduto[0]
-        }]
-      }, () => console.log(this.state.carrinho))
-    } else {
-      this.setState({
-        carrinho: itemCarrinho
-      }, () => console.log(this.state.carrinho))
-    }
-
-  }
-
-  onChangeFilter = (event) => {
-    this.setState({ ordem: event.target.value });
-  };
-
-  onChangeFiltroMin = (event) => {
-    this.setState({ minPrice: event.target.value });
-  };
-  onChangeFiltroMax = (event) => {
-    this.setState({ maxPrice: event.target.value });
-  };
-  onChangeFiltroNome = (event) => {
-    this.setState({ filterName: event.target.value });
-  };
-  onSubmitFinalizaCompra = (event) => {
-    alert ("Compra realizada com sucesso!")
-  };
-
-  ordemArray = () => {
-    const ordemArray = this.state.produtos.sort((a, b) =>
-      this.state.ordem === "Crescente" ? a.price - b.price : b.price - a.price
-    );
-    return ordemArray;
-  };
 
   limparFiltro = () => {
     this.setState({
@@ -215,19 +214,13 @@ export default class App extends React.Component {
         const produtoCarrinho = {
           ...produto,
           quantify: quantidadeCarrinho,
-          
         };
-        console.log("produto seleciano/====> ", produtoCarrinho)
-        console.log("quant prod igual===> ", quantidadeCarrinho)
-        console.log("id", produto.id)
-        console.log()
         return produtoCarrinho;
       } else {
         return produto;
       }
     });
     this.setState({ produtos: carrinhoArray });
-    
   };
 
   subtrairDoCarrinho = (id) => {
@@ -265,19 +258,21 @@ export default class App extends React.Component {
       this.state.maxPrice,
       this.state.filterName
     );
+
     return (
-     
+      <>
+      <HeaderContainer>
+      CONQUISTE SEU ESPAÇO
+      </HeaderContainer>
       <Display>
-
+     
         <Inputs>
-
           <p>Procure pelo <span>Nome</span>:</p>
           <input
             placeholder='Pesquisar'
             value={this.state.query}
             onChange={this.Updatequery}
           />
-
           <p>Procure pelo <span>Preço</span>:</p>
           <input
             type='number'
@@ -291,11 +286,7 @@ export default class App extends React.Component {
             value={this.state.maxPrice}
             onChange={this.UpdateMaxPrice}
           />
-
-          <button onClick={this.limparFiltro}>Limpar</button>
-
-          
-
+          <ButtonClean onClick={this.limparFiltro}>Limpar</ButtonClean>
           <p>Quantidade de produtos: {filtroArray.length}  </p>
           <div>
             <label>Ordenar por: </label>
@@ -304,11 +295,9 @@ export default class App extends React.Component {
               <option value="Decrescente">Maior Preço </option>
             </select>
           </div>
-
         </Inputs>
 
         <Cards>
-
           {this.state.produtos
             .filter(produto => {
               return produto.name.toLowerCase().includes(this.state.query.toLowerCase())
@@ -329,8 +318,7 @@ export default class App extends React.Component {
                       adicionarAoCarrinho={this.adicionarAoCarrinho}
                       produtos={filtroArray}
                       />
-              )
-              
+              ) 
             })}
         </Cards>
         <Inputs>
@@ -342,13 +330,9 @@ export default class App extends React.Component {
             produtosCarrinho={this.state.produtos}
             finalizaCompra ={this.onSubmitFinalizaCompra}
           />
-
         </Inputs>
       </Display>
-
-
-
-
+      </>
     )
   }
 }
