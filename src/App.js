@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import Carrinho from "./components/carrinho";
 import Card from "./components/card";
+import Carrinho from "./components/carrinho";
 
 const Display = styled.div`
     display: grid;
-    grid-template-columns: 200px 1fr 180px;
+    grid-template-columns: 1fr 5fr 1.3fr;
 `
 
 const Cards = styled.div`
-    display: grid;
-    grid-template-columns: repeat(3,300px);
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 10px;
     justify-items: start;
     justify-content: center;
 `
@@ -40,37 +41,45 @@ export default class App extends React.Component {
         id: 1,
         name: 'Produto Um',
         price: 1000.0,
-        photo: 'https://picsum.photos/200/200?a=5'
+        photo: 'https://picsum.photos/200/200?a=5',
+        quantify:0,
+
       },
       {
         id: 2,
         name: 'Produto Dois',
         price: 270.0,
-        photo: 'https://picsum.photos/200/200?a=2'
+        photo: 'https://picsum.photos/200/200?a=2',
+        quantify:0,
+      
       },
       {
         id: 3,
         name: 'Produto Três',
         price: 150.0,
-        photo: 'https://picsum.photos/200/200?a=3'
+        photo: 'https://picsum.photos/200/200?a=3',
+        quantify:0,
       },
       {
         id: 4,
         name: 'Produto Quatro',
         price: 75.0,
-        photo: 'https://picsum.photos/200/200?a=4'
+        photo: 'https://picsum.photos/200/200?a=4',
+        quantify:0,
       },
       {
         id: 5,
         name: 'Produto 5',
         price: 75.0,
-        photo: 'https://picsum.photos/200/200?a=4'
+        photo: 'https://picsum.photos/200/200?a=4',
+        quantify:0,
       },
       {
         id: 6,
         name: 'Produto 6',
         price: 75.0,
-        photo: 'https://picsum.photos/200/200?a=4'
+        photo: 'https://picsum.photos/200/200?a=4',
+        quantify:0,
       }
     ],
 
@@ -79,7 +88,8 @@ export default class App extends React.Component {
         id: 6,
         name: 'Produto 6',
         price: 75.0,
-        photo: 'https://picsum.photos/200/200?a=4'
+        photo: 'https://picsum.photos/200/200?a=4',
+        quantify:0,
 
       }],
 
@@ -151,6 +161,9 @@ export default class App extends React.Component {
   onChangeFiltroNome = (event) => {
     this.setState({ filterName: event.target.value });
   };
+  onSubmitFinalizaCompra = (event) => {
+    alert ("Compra realizada com sucesso!")
+  };
 
   ordemArray = () => {
     const ordemArray = this.state.produtos.sort((a, b) =>
@@ -194,6 +207,56 @@ export default class App extends React.Component {
     return filtragemCompleta;
   };
 
+  // -------------------- FUNÇÕES DO CARRINHO --------------------
+  adicionarAoCarrinho = (id) => {
+    const carrinhoArray = this.state.produtos.map((produto) => {
+      if (produto.id === id) {
+        const quantidadeCarrinho = produto.quantify + 1;
+        const produtoCarrinho = {
+          ...produto,
+          quantify: quantidadeCarrinho,
+          
+        };
+        console.log("produto seleciano/====> ", produtoCarrinho)
+        console.log("quant prod igual===> ", quantidadeCarrinho)
+        console.log("id", produto.id)
+        console.log()
+        return produtoCarrinho;
+      } else {
+        return produto;
+      }
+    });
+    this.setState({ produtos: carrinhoArray });
+    
+  };
+
+  subtrairDoCarrinho = (id) => {
+    const carrinhoArray = this.state.produtos.map((produto) => {
+      if (produto.id === id) {
+        const quantidadeCarrinho = produto.quantify - 1;
+        const produtoCarrinho = {
+          ...produto,
+          quantify: quantidadeCarrinho,
+        };
+        return produtoCarrinho;
+      } else {
+        return produto;
+      }
+    });
+    this.setState({ produtos: carrinhoArray });
+  };
+
+  removerDoCarinho = (id) => {
+    const carrinhoArray = this.state.produtos.map((produto) => {
+      if (produto.id === id) {
+        const produtoCarrinho = { ...produto, quantify: 0 };
+        return produtoCarrinho;
+      } else {
+        return produto;
+      }
+    });
+    this.setState({ produtos: carrinhoArray });
+  };
 
   render() {
     this.ordemArray();
@@ -257,14 +320,28 @@ export default class App extends React.Component {
               return this.state.maxPrice === '' || produto.price <= this.state.maxPrice
             })
             .map(produto => {
-              return <Card photo={produto.photo} name={produto.name} price={produto.price} parcelado={produto.price / 10} />
+              return (
+                <Card photo={produto.photo} 
+                      name={produto.name} 
+                      price={produto.price} 
+                      parcelado={produto.price / 10} 
+                      id={produto.id}
+                      adicionarAoCarrinho={this.adicionarAoCarrinho}
+                      produtos={filtroArray}
+                      />
+              )
+              
             })}
         </Cards>
         <Inputs>
 
-          {this.state.carrinho.map(produto => {
-            return <Carrinho name={produto.name} price={produto.price} />
-          })}
+        <Carrinho
+            adicionarAoCarrinho={this.adicionarAoCarrinho}
+            subtrairDoCarrinho={this.subtrairDoCarrinho}
+            removerDoCarinho={this.removerDoCarinho}
+            produtosCarrinho={this.state.produtos}
+            finalizaCompra ={this.onSubmitFinalizaCompra}
+          />
 
         </Inputs>
       </Display>

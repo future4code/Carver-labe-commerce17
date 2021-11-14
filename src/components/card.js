@@ -7,7 +7,7 @@ const DisplayCard = styled.div `
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 250px;
+    width: clamp(250px, 20%, 400px);
     max-height: 50vh;
     margin: 10px;
     padding: 3.5px;
@@ -36,14 +36,16 @@ const DisplayCard = styled.div `
 export default class Card extends React.Component {
 
     render() {
+        
         return (
             <DisplayCard>
                 <img src={this.props.photo} alt={"imagem do post"} />
                 <h2>{this.props.name}</h2>
                 <p>R$:{this.props.price} ou por 10x R$:{this.props.parcelado}</p>
-                <button value = {this.props.id} onClick={this.props.function}>Adicionar ao carrinho</button>
+            <button onClick={() => this.props.adicionarAoCarrinho(this.props.id)} >Adicionar ao carrinho</button>
             </DisplayCard>
 
         );
+        
     }
 }
