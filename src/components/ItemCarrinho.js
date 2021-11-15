@@ -55,7 +55,7 @@ class ItemCarrinho extends React.Component {
         
       </ItemCarrinhoContainer>
       
-    );
+    )
   }
 }
 

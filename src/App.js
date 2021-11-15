@@ -247,7 +247,7 @@ export default class App extends React.Component {
       } else {
         return produto;
       }
-    });
+    })
     this.setState({ produtos: carrinhoArray });
   };
 

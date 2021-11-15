@@ -52,7 +52,7 @@ export default class Card extends React.Component {
             <button onClick={() => this.props.adicionarAoCarrinho(this.props.id)} >Adicionar ao carrinho</button>
             </DisplayCard>
 
-        );
+        )
         
     }
 }
