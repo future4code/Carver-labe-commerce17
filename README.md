@@ -5,7 +5,7 @@ Aplicação web para E-commerce espacial. Consolidando conhecimentos em React.
 ### Link Surge (Veja na web)
 https://labe-commerce17-direction.surge.sh/
 
-## 📦 Desenvolvimento
+## 📦 Desenvolvimentos
 Funcionalidades:
 
 Lista de produtos

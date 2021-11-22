@@ -28,7 +28,7 @@ class Carrinho extends React.Component {
       } else {
         return false;
       }
-    });
+    })
 
     const carrinho = filtroCarrinho.map((produto) => {
       return (
